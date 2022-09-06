@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ImageBinarySchema } from '../models/ImageBinary';
 import sharp from 'sharp';
+import { Blob } from 'buffer';
 
 const ImageB = mongoose.model('ImageB', ImageBinarySchema);
 
@@ -43,15 +44,12 @@ export const fetchBinary = async (req, res) => {
         const image = await ImageB.findOne({ _id: idImage });
         const valueImg = image.imageB;
         const buffer = Buffer.from(valueImg);
-        res.header('Content-Type', 'image/png');
-        res.send(valueImg)
-        // const imgData = new Blob(buffer, { type: 'application/octet-binary' });
-        // let link = URL.createObjectURL(imgData);
-
-        // let img = new Image();
-        // img.onload = () => URL.revokeObjectURL(link);
-        
-        // res.send(img.src = link)
+        let base64Buffer = buffer.toString("base64")
+        // res.header('Content-Type', 'image/png');
+        res.status(200).json({
+            "message": "lol",
+            "image": base64Buffer
+        })
     } catch (error) {
         return res.status(400).json(error.message);
     }

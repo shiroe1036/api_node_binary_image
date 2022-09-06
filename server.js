@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8080"
+    origin: ["http://localhost:8080", "http://localhost:3000"]
 };
 
 mongoose.Promise = global.Promise;
