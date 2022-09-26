@@ -54,3 +54,27 @@ export const fetchBinary = async (req, res) => {
         return res.status(400).json(error.message);
     }
 }
+
+export const fetchAll = async (req, res) => {
+    try {
+        const images = await ImageB.find();
+        let data = [];
+
+        images.forEach(item => {
+            let subData = {}
+            subData['imageB'] = convertImageBase64(item.imageB)
+            data.push(subData);
+        })
+
+        res.status(200).json(data)
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
+const convertImageBase64 = (blob) => {
+    const buffer = Buffer.from(blob, 'binary');
+    let base64Buffer = buffer.toString("base64")
+
+    return base64Buffer
+}
