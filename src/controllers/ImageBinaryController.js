@@ -61,7 +61,7 @@ export const fetchAll = async (req, res) => {
         let data = [];
 
         images.forEach(item => {
-            let subData = {}
+            let subData = {...item._doc}
             subData['imageB'] = convertImageBase64(item.imageB)
             data.push(subData);
         })
